@@ -5,28 +5,30 @@
 
 from setuptools import setup, find_packages
 
-
 long_description = """
 """
 
-requirements = [
-]
+requirements = ['setuptools==49.2.0',
+                'pytorch',
+                'lifelines==0.21.0',
+                'scipy==1.3.0',
+                'scikit-learn==0.21.2',
+                'numpy==1.16.4',
+                'progressbar2==3.50.1',
+                'pandas==0.25.0'
+                ]
 
 setup(
     name='pydpwte',
     version='0.0.1',
-    description="Survival analysis using DeepWeiSurv",
+    description="Survival Analysis using Deep Learning and Weibull Distribution",
     long_description=long_description,
-    #long_description_content_type='text/markdown',
     author="Achraf Bennis",
     author_email='achraf.bennis.b@gmail.com',
-    #url='https://github.com/havakv/pycox',
     packages=find_packages(),
     include_package_data=True,
-    #install_requires=requirements,
-    #license="BSD license",
     zip_safe=False,
-    #keywords='pycox',
+    install_requires=requirements,
     classifiers=[
         'Natural Language :: English',
         'Programming Language :: Python :: 3.8',

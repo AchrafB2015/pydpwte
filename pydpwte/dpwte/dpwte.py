@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as t_func
 
-from dpwte.mixed_weibull_sparse_layer import MWSL
+from dpwte.mixed_weibull_sparse_layer import SparseWeibullMixtureLayer
 
 
 class Dpwte(nn.Module):
@@ -40,7 +40,7 @@ class Dpwte(nn.Module):
         self.dense_2_CSN = nn.Linear(16, 8)
         self.batch_CSN = nn.BatchNorm1d(8)
         self.denseOutputAlphas = nn.Linear(8, p_max)
-        self.mwsl = MWSL(p_max)
+        self.mwsl = SparseWeibullMixtureLayer(p_max)
         self.walpha = nn.Parameter(torch.randn(p_max), requires_grad=True)
 
     def forward(self, x):

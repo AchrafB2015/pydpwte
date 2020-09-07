@@ -8,8 +8,8 @@ import torch
 import torch.nn as nn
 
 
-class MWSL(nn.Module):
-    """ Class that creates the Mixed Weibull Sparse layer (MWS)
+class SparseWeibullMixtureLayer(nn.Module):
+    """ Class that creates the Sparse Weibull Mixture layer
         Arguments:
             p_max:  the upper bound of the number of Weibull distributions composing the mixture
     """
@@ -33,6 +33,7 @@ class MWSL(nn.Module):
         """ Function that calculates element-wise multiplication
             wbar x alpha = [w_bar_1*alpha_1, ..., w_bar_p*alpha_p]
             where w_bar = w/sum(w)
+            alphas {tensor}: the outputs of the layer that precedes SWM layer.
         """
 
         x, y = alphas.shape
