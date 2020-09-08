@@ -1,2 +1,2 @@
 # pydpwte
-                                                     __Deep Parsimonious Weibull Time-to-Event__
+                                                     Deep Parsimonious Weibull Time-to-Event
