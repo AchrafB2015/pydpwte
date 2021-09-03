@@ -17,8 +17,12 @@ def train_network_with_gpu(model, X, Y, n_epochs, optimizer, regularization_para
     for epoch in range(n_epochs):
         model.train()
         optimizer.zero_grad()
-        loss, nll = total_loss_gpu(model, X, Y, device, regularization_parameter)
-        loss.backward()
+        if (model.sparse_reg):
+            loss, nll = total_loss_gpu(model, X, Y, device, regularization_parameter)
+            loss.backward()
+        else:
+            nll = total_loss_gpu(model, X, Y, device)
+            nll.backward()
         optimizer.step()
 
         if epoch % (n_epochs // 10) == 0 and ~np.isnan(nll.item()):
@@ -37,7 +41,7 @@ def train_network_without_gpu(model, trainloader, n_epochs, optimizer, regulariz
         except StopIteration:
             iterloader = iter(trainloader)
             batch = next(iterloader)
-        inputs = batch[:, :-2]
+        inputs  = batch[:, :-2]
         targets = batch[:, -2:]
         optimizer.zero_grad()
         loss, nll = total_loss(model, inputs, targets, regularization_parameter)
