@@ -27,8 +27,9 @@ def train_network_with_gpu(model, X, Y, n_epochs, optimizer, regularization_para
 
         if epoch % (n_epochs // 10) == 0 and ~np.isnan(nll.item()):
             print(' iteration n°  %d negative log-likelihood: %.8f' % (epoch + 1, nll.item()))
-        model.mwsl.normalize_weights()
-
+        if (model.sparse_reg):
+            model.mwsl.normalize_weights()
+    return model
 
 def train_network_without_gpu(model, trainloader, n_epochs, optimizer, regularization_parameter):
     bar = progressbar.ProgressBar(maxval=n_epochs,
@@ -44,11 +45,18 @@ def train_network_without_gpu(model, trainloader, n_epochs, optimizer, regulariz
         inputs  = batch[:, :-2]
         targets = batch[:, -2:]
         optimizer.zero_grad()
-        loss, nll = total_loss(model, inputs, targets, regularization_parameter)
-        loss.backward()
+        if (model.sparse_reg):
+            loss, nll = total_loss(model, inputs, targets, regularization_parameter)
+            loss.backward()
+        else:
+            nll = total_loss(model, inputs, targets)
+            nll.backward()
         optimizer.step()
+        if (model.sparse_reg):
+            model.mwsl.normalize_weights()
         bar.update(epoch)
     bar.finish()
+    return model
 
 
 def train_network_and_return_outputs(model, X, Y, train_inds, xfold_train, yfold_train,
