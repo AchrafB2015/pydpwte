@@ -7,7 +7,7 @@ Created on Sat May 30 16:23:07 2020
 import torch
 
 
-def total_loss_gpu(model, X, Y, device, regularization_parameter):
+def total_loss_gpu(model, X, Y, device, regularization_parameter=None):
     outputs = model(X.to(device))
     nll     = first_operand_of_total_loss(outputs, Y.to(device))
     if (model.sparse_reg):
