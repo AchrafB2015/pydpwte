@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Top-level package for pycox."""
+"""Top-level package for pydpwte."""
 
 __author__ = """Achraf Bennis"""
 __email__ = 'achraf.bennis.b@gmail.com'
