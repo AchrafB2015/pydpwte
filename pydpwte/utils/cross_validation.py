@@ -33,25 +33,26 @@ class CrossValidation:
 
     def __init__(self, model, p, inputs, targets, optimizer_name='Adam',
                  regularization_parameter=1e-4, w_th=0.1, n_epochs=1e3, lr=1e-4):
-        self.X = inputs
-        self.Y = targets
-        self.model = model
-        self.n_epochs = n_epochs
+        self.X         = inputs
+        self.Y         = targets
+        self.model     = model
+        self.n_epochs  = n_epochs
+        
         self.reg_param = regularization_parameter
-        self.p = p
-        self.w_th = w_th
-        self.lr = lr
+        self.p         = p
+        self.w_th      = w_th
+        self.lr        = lr
 
-        self.gpu = True if torch.cuda.is_available() else False
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.gpu     = True if torch.cuda.is_available() else False
+        self.device  = 'cuda' if torch.cuda.is_available() else 'cpu'
 
         self.xfold_train = None
-        self.xfold_val = None
+        self.xfold_val   = None
         self.yfold_train = None
-        self.yfold_val = None
-        self.train_inds = None
-        self.val_inds = None
-        self.results = None
+        self.yfold_val   = None
+        self.train_inds  = None
+        self.val_inds    = None
+        self.results     = None
 
         if optimizer_name == 'SGD':
             self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9)
@@ -73,10 +74,10 @@ class CrossValidation:
             counter = 1
             while not trained:
 
-                self.xfold_train = torch.tensor(self.X[self.train_inds])
-                self.xfold_val = torch.tensor(self.X[self.val_inds])
-                self.yfold_train = torch.tensor(self.Y[self.train_inds])
-                self.yfold_val = torch.tensor(self.Y[self.val_inds])
+                self.xfold_train  = torch.tensor(self.X[self.train_inds])
+                self.xfold_val    = torch.tensor(self.X[self.val_inds])
+                self.yfold_train  = torch.tensor(self.Y[self.train_inds])
+                self.yfold_val    = torch.tensor(self.Y[self.val_inds])
                 validation_target = self.yfold_val.numpy()
 
                 self.results = train_network_and_return_outputs(self.model, self.X,
@@ -86,8 +87,8 @@ class CrossValidation:
                                                                 self.optimizer, self.n_epochs,
                                                                 self.reg_param, self.gpu, self.device)
 
-                mean_alphas = torch.mean(self.results[2], 0)
-                selected_alphas, selected_indices = select_alphas_and_normalize(mean_alphas, self.w_th)
+                mean_alphas                             = torch.mean(self.results[2], 0)
+                selected_alphas, selected_indices       = select_alphas_and_normalize(mean_alphas, self.w_th)
                 betas_predicted, etas_predicted, alphas = select_mixture_parameters(self.results, selected_indices)
 
                 if len(selected_alphas) != 0:
