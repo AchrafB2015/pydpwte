@@ -17,7 +17,7 @@ def total_loss_gpu(model, X, Y, device, regularization_parameter=None):
         return nll 
 
 
-def total_loss(model, inputs, targets, regularization_parameter):
+def total_loss(model, inputs, targets, regularization_parameter=None):
     outputs = model(inputs)
     nll     = first_operand_of_total_loss(outputs, targets)
     if (model.sparse_reg):
