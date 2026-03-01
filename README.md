@@ -7,8 +7,8 @@ It implements **DPWTE**, a deep-learning model that learns a parsimonious finite
 
 This work was done during my PhD on survival analysis and is based on two approaches:
 
-- **DPWTE**: Bennis et al., *“DPWTE: A Deep Learning Approach to Survival Analysis Using a Parsimonious Mixture of Weibull Distributions”*, ICANN 2021. [[Springer link](https://link.springer.com/chapter/10.1007/978-3-030-86340-1_15)]
-- **DeepWeiSurv**: Bennis et al., *“Estimation of Conditional Mixture Weibull Distribution with Right Censored Data Using Neural Network for Time-to-Event Analysis”*, PAKDD 2020. [[Springer link](https://link.springer.com/chapter/10.1007/978-3-030-47426-3_53)]
+- **DPWTE**: Bennis et al., *“DPWTE: A Deep Learning Approach to Survival Analysis Using a Parsimonious Mixture of Weibull Distributions”*, ICANN 2021 (RANK B). [[Springer link](https://link.springer.com/chapter/10.1007/978-3-030-86340-1_15)]
+- **DeepWeiSurv**: Bennis et al., *“Estimation of Conditional Mixture Weibull Distribution with Right Censored Data Using Neural Network for Time-to-Event Analysis”*, PAKDD 2020 (RANK A). [[Springer link](https://link.springer.com/chapter/10.1007/978-3-030-47426-3_53)]
 
 The current codebase exposes the DPWTE model and training pipeline; DeepWeiSurv is the conceptual precursor and will be aligned in the same package structure.
 
