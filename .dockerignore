@@ -1,0 +1,9 @@
+venv
+__pycache__
+.git
+.idea
+.vscode
+.ipynb_checkpoints
+dist
+build
+

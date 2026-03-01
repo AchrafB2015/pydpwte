@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as t_func
 
-from dpwte.mixed_weibull_sparse_layer import SparseWeibullMixtureLayer
+from .mixed_weibull_sparse_layer import SparseWeibullMixtureLayer
 
 
 class dpwte(nn.Module):
@@ -66,12 +66,12 @@ class dpwte(nn.Module):
         x_clf = t_func.relu(self.batch_CSN(self.dense_2_CSN(x_clf)))
         
         if (self.sparse_reg):# Mixed Weibull Sparse layer
-            q_k            = t_func.softmax(self.alphasout(x_clf))
+            q_k            = t_func.softmax(self.alphasout(x_clf), dim=1)
             alphas         = self.mwsl(q_k)
             sums_of_alphas = alphas.data.sum(dim=1).reshape(-1, 1)# sums_of_alphas = (alphas.data).sum()
             alphas         = alphas / sums_of_alphas
         else:
-            alphas  = t_func.softmax(self.alphasout(x_clf))
+            alphas  = t_func.softmax(self.alphasout(x_clf), dim=1)
         
         
         return [betas, etas, alphas]

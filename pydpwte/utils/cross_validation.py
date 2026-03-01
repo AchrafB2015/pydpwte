@@ -10,8 +10,8 @@ import torch.optim as optim
 import lifelines.utils
 from scipy.special import gamma
 from sklearn.model_selection import KFold
-from utils.postprocess import select_alphas_and_normalize, select_mixture_parameters
-from utils.train import train_network_and_return_outputs
+from .postprocess import select_alphas_and_normalize, select_mixture_parameters
+from .train import train_network_and_return_outputs
 
 
 class CrossValidation:
@@ -36,7 +36,7 @@ class CrossValidation:
         self.X         = inputs
         self.Y         = targets
         self.model     = model
-        self.n_epochs  = n_epochs
+        self.n_epochs  = int(n_epochs)
         
         self.reg_param = regularization_parameter
         self.p         = p

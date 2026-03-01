@@ -10,7 +10,7 @@ from torch.utils import data
 import numpy as np
 
 import progressbar
-from utils.loss import total_loss_gpu, total_loss
+from .loss import total_loss_gpu, total_loss
 
 
 def train_network_with_gpu(model, X, Y, n_epochs, optimizer, regularization_parameter, device):

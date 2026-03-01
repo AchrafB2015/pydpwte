@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import numpy  as np
-from utils.preprocess import normalize_input_data
+from ..utils.preprocess import normalize_input_data
 
 def generate_data_SUPPORT():
 
@@ -21,7 +21,7 @@ def generate_data_SUPPORT():
     data        = data.dropna(axis=0, how='any')
     data        = pd.get_dummies(data, columns=['dnr', 'ca', 'dzclass', 'dzgroup', 'sex', 'race'])
     corr_matrix = data.corr().abs()
-    upper       = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
+    upper       = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
 
     # Find index of feature columns with correlation greater than 0.8
     to_drop        = [column for column in upper.columns if (any(upper[column] > 0.8)) ]
@@ -53,9 +53,9 @@ def generate_METABRIC_Data():
     data['event_time'] = data['event_time'].apply(lambda x : x/mx)
 
     X, Y  = np.array(data.drop(['event_time', 'label'], axis = 1)).astype(np.float32), np.array(data[['event_time', 'label']]).astype(np.float32)
-    n_cols = X.shape[1]
+    X     = normalize_input_data(X)
 
-    size       = len(DATA)
+    size       = len(X)
     train_size = int(0.8*size)
 
     train_indices  = np.random.choice(range(size),train_size, replace=False)
